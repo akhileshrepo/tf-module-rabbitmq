@@ -2,7 +2,7 @@ resource "aws_security_group" "main" {
   name        = "${local.name_prefix}-sg"
   description = "${local.name_prefix}-sg"
   vpc_id      = var.vpc_id
-  tags = merge(local.tags, {Name = "${local.name_prefix}-sg"})
+  tags        = merge(local.tags, { Name = "${local.name_prefix}-sg" })
 
   ingress {
     description = "SSH"
@@ -29,13 +29,15 @@ resource "aws_security_group" "main" {
   }
 }
 
+
 resource "aws_instance" "main" {
-  ami = data.aws_ami.ami.id
-  instance_type = var.instance_type
+  ami                    = data.aws_ami.ami.id
+  instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.main.id]
-  subnet_id = var.subnet_id
-  tags = merge(local.tags, {Name = "${local.name_prefix}-ec2"})
-  user_data = file("${path.module}/userdata.sh")
+  subnet_id              = var.subnet_ids[0]
+  tags                   = merge(local.tags, { Name = local.name_prefix })
+  user_data              = file("${path.module}/userdata.sh")
+
 }
 
 resource "aws_route53_record" "main" {
