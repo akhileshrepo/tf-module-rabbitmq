@@ -1,4 +1,4 @@
 locals {
-  name_prefix = "${var.env}-ec2-rabbitmq"
+  name_prefix = "${var.env}-rabbitmq"
   tags        = merge(var.tags, { tf-module-name = "rabbitmq" }, { env = var.env })
 }
