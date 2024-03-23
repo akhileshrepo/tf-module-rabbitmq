@@ -35,5 +35,5 @@ resource "aws_instance" "main" {
   vpc_security_group_ids = [aws_security_group.main.id]
   subnet_id = var.subnet_ids[0]
   tags        = merge(local.tags, { Name = local.name_prefix })
-  user_data = "${path.module}/userdata.sh"
+  user_data = file("${path.module}/userdata.sh")
 }
