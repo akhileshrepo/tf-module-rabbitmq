@@ -13,7 +13,7 @@ resource "aws_security_group" "main" {
   }
 
   ingress {
-    description = "SSH"
+    description = "RABBITMQ"
     from_port   = 5672
     to_port     = 5672
     protocol    = "tcp"
@@ -30,12 +30,12 @@ resource "aws_security_group" "main" {
 }
 
 resource "aws_instance" "main" {
-  ami = data.aws_ami.ami.id
-  instance_type = var.instance_type
+  ami                    = data.aws_ami.ami.id
+  instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.main.id]
-  subnet_id = var.subnet_ids[0]
-  tags        = merge(local.tags, { Name = local.name_prefix })
-  user_data = file("${path.module}/userdata.sh")
+  subnet_id              = var.subnet_ids[0]
+  tags                   = merge(local.tags, { Name = local.name_prefix })
+  user_data              = file("${path.module}/userdata.sh")
 }
 
 resource "aws_route53_record" "main" {
