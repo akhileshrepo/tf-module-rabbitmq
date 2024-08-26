@@ -37,6 +37,11 @@ resource "aws_instance" "main" {
   tags                   = merge(local.tags, { Name = local.name_prefix })
   user_data              = file("${path.module}/userdata.sh")
 
+  root_block_device {
+    encrypted = true
+    kms_key_id = var.kms_key_id
+  }
+
 }
 resource "aws_route53_record" "main" {
   zone_id = var.zone_id
