@@ -41,8 +41,8 @@ resource "aws_instance" "main" {
     encrypted = true
     kms_key_id = var.kms_key_id
   }
-
 }
+
 resource "aws_route53_record" "main" {
   zone_id = var.zone_id
   name    = "rabbitmq-${var.env}"
